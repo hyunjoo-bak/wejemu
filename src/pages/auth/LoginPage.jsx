@@ -6,9 +6,16 @@ import { useNavigate } from 'react-router-dom';
 export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('master@erp.kr');
+  const [password, setPassword] = useState('master1234');
   const [error, setError] = useState(null);
+
+  const TEST_ACCOUNTS = [
+    { label: '마스터', email: 'master@erp.kr', password: 'master1234' },
+    { label: '서브 어드민', email: 'super@erp.kr', password: 'super1234' },
+    { label: '승인 대기', email: 'lee@erp.kr', password: 'lee1234' },
+    { label: '반려', email: 'deny1@erp.kr', password: 'deny1234' },
+  ];
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -97,7 +104,32 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div style={{ textAlign: 'center', marginTop: 20, fontSize: 12, color: 'var(--gray-400)' }}>
+        {/* 테스트 계정 빠른 선택 */}
+        <div style={{ marginTop: 24, paddingTop: 20, borderTop: '0.5px solid var(--color-border)' }}>
+          <div style={{ fontSize: 11, color: 'var(--gray-400)', marginBottom: 8, textAlign: 'center' }}>
+            테스트 계정 빠른 선택
+          </div>
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'center' }}>
+            {TEST_ACCOUNTS.map(a => (
+              <button
+                key={a.email}
+                type="button"
+                onClick={() => { setEmail(a.email); setPassword(a.password); setError(null); }}
+                className="btn btn-sm"
+                style={{
+                  fontSize: 11,
+                  background: email === a.email ? 'var(--purple-50)' : 'white',
+                  borderColor: email === a.email ? 'var(--purple-400)' : 'var(--color-border)',
+                  color: email === a.email ? 'var(--purple-800)' : 'var(--gray-500)',
+                }}
+              >
+                {a.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ textAlign: 'center', marginTop: 16, fontSize: 12, color: 'var(--gray-400)' }}>
           계정이 없으신가요?{' '}
           <Link to="/signup" style={{ color: 'var(--purple-600)', fontWeight: 600 }}>
             가입 신청 →
