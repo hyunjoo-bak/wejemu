@@ -73,7 +73,7 @@ export default function Sidebar() {
             color: 'white', fontSize: 14, fontWeight: 700,
           }}>경</div>
           <div>
-            <div style={{ fontWeight: 700, fontSize: 13, color: 'var(--purple-900)' }}>경리나라 Admin</div>
+            <div style={{ fontWeight: 700, fontSize: 13, color: 'var(--purple-900)' }}>WEJEMU Admin</div>
             <div style={{ fontSize: 10, color: 'var(--gray-400)' }}>v2.4.1</div>
           </div>
         </div>

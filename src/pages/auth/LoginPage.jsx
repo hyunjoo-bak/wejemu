@@ -53,7 +53,7 @@ export default function LoginPage() {
             color: 'white', fontSize: 22, fontWeight: 700,
             marginBottom: 12,
           }}>경</div>
-          <div style={{ fontWeight: 700, fontSize: 18, color: 'var(--purple-900)' }}>경리나라 Admin</div>
+          <div style={{ fontWeight: 700, fontSize: 18, color: 'var(--purple-900)' }}>WEJEMU Admin</div>
           <div style={{ fontSize: 12, color: 'var(--gray-400)', marginTop: 4 }}>백오피스 관리 시스템</div>
         </div>
 
