@@ -21,7 +21,7 @@ export default function ApprovalPage() {
   const [modal, setModal] = useState(null);
   const [selectedRole, setSelectedRole] = useState('original');
   const [rejectReason, setRejectReason] = useState('');
-  const [modalStep, setModalStep] = useState('select');
+  const [modalStep, setModalStep] = useState('select'); // 'select' | 'reject'
 
   function openModal(item) {
     setModal(item);
@@ -32,6 +32,12 @@ export default function ApprovalPage() {
 
   function handleApprove() {
     const finalRole = selectedRole === 'original' ? modal.role : '관리자';
+    const now = new Date();
+    const approvedAt = now.toLocaleString('ko-KR', {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit',
+    }).replace(/\./g, '.').replace(/\s/g, ' ');
+
     setPending(p => p.filter(x => x.id !== modal.id));
     setDone(d => [{
       id: modal.id,
@@ -39,13 +45,13 @@ export default function ApprovalPage() {
       email: modal.email,
       role: finalRole,
       result: '가입 승인',
-      approvedAt: new Date().toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/\. /g, '.').replace('.', '.'),
+      approvedAt,
       approver: '마스터관리자',
     }, ...d]);
     setModal(null);
   }
 
-  function handleRejectConfirm() {
+  function handleRejectProceed() {
     if (modalStep === 'select') {
       setModalStep('reject');
       return;
@@ -85,12 +91,31 @@ export default function ApprovalPage() {
 
       {/* 탭 */}
       <div className="tab-bar">
-        <div className={`tab-item ${tab === 'pending' ? 'active' : ''}`} onClick={() => setTab('pending')}>
-          승인 대기 <span style={{ marginLeft: 6, background: 'var(--amber-50)', color: 'var(--amber-600)', fontSize: 11, padding: '1px 6px', borderRadius: 10, fontWeight: 700 }}>{pending.length}</span>
+        <div
+          className={`tab-item${tab === 'pending' ? ' active' : ''}`}
+          onClick={() => setTab('pending')}
+        >
+          승인 대기
+          {pending.length > 0 && (
+            <span style={{
+              background: 'var(--amber-50)',
+              color: 'var(--amber-600)',
+              fontSize: 11,
+              padding: '1px 6px',
+              borderRadius: 10,
+              fontWeight: 700,
+            }}>{pending.length}</span>
+          )}
         </div>
-        <div className={`tab-item ${tab === 'done' ? 'active' : ''}`} onClick={() => setTab('done')}>처리 완료</div>
+        <div
+          className={`tab-item${tab === 'done' ? ' active' : ''}`}
+          onClick={() => setTab('done')}
+        >
+          처리 완료
+        </div>
       </div>
 
+      {/* 승인 대기 탭 */}
       {tab === 'pending' && (
         <div className="table-wrap">
           <table>
@@ -100,24 +125,44 @@ export default function ApprovalPage() {
                 <th>이메일</th>
                 <th>소속</th>
                 <th>신청 역할</th>
-                <th style={{ maxWidth: 200 }}>신청 사유</th>
+                <th style={{ maxWidth: 220 }}>신청 사유</th>
                 <th>신청일</th>
                 <th>처리</th>
               </tr>
             </thead>
             <tbody>
               {pending.length === 0 ? (
-                <tr><td colSpan={7} style={{ textAlign: 'center', color: 'var(--gray-400)', padding: 32 }}>대기 중인 신청이 없습니다.</td></tr>
+                <tr>
+                  <td colSpan={7} style={{
+                    textAlign: 'center',
+                    color: 'var(--gray-400)',
+                    padding: 32,
+                  }}>
+                    대기 중인 신청이 없습니다.
+                  </td>
+                </tr>
               ) : pending.map(item => (
                 <tr key={item.id}>
                   <td style={{ fontWeight: 600 }}>{item.name}</td>
                   <td>{item.email}</td>
                   <td>{item.dept}</td>
                   <td><Badge value={item.role} /></td>
-                  <td style={{ maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.reason}</td>
+                  <td style={{
+                    maxWidth: 220,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}>
+                    {item.reason}
+                  </td>
                   <td>{item.date}</td>
                   <td>
-                    <button className="btn btn-primary btn-sm" onClick={() => openModal(item)}>가입 승인</button>
+                    <button
+                      className="btn btn-primary btn-sm"
+                      onClick={() => openModal(item)}
+                    >
+                      가입 승인
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -126,6 +171,7 @@ export default function ApprovalPage() {
         </div>
       )}
 
+      {/* 처리 완료 탭 */}
       {tab === 'done' && (
         <div className="table-wrap">
           <table>
@@ -155,7 +201,7 @@ export default function ApprovalPage() {
         </div>
       )}
 
-      {/* 모달 */}
+      {/* 승인/반려 모달 */}
       {modal && (
         <div className="modal-overlay" onClick={() => setModal(null)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
@@ -163,22 +209,41 @@ export default function ApprovalPage() {
               <>
                 <div className="modal-title">가입 승인 확정</div>
                 <div style={{ fontSize: 13, color: 'var(--gray-500)', marginBottom: 16 }}>
-                  <strong style={{ color: 'var(--color-text)' }}>{modal.name}</strong> ({modal.email}) 님의 가입을 처리합니다.
+                  <strong style={{ color: 'var(--color-text)' }}>{modal.name}</strong>{' '}
+                  ({modal.email}) 님의 가입을 처리합니다.
                 </div>
-                <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--gray-500)', marginBottom: 10 }}>역할 확정</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--gray-500)', marginBottom: 10 }}>
+                  역할 확정
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                   <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', fontSize: 13 }}>
-                    <input type="radio" name="role" value="original" checked={selectedRole === 'original'} onChange={() => setSelectedRole('original')} />
+                    <input
+                      type="radio"
+                      name="role"
+                      value="original"
+                      checked={selectedRole === 'original'}
+                      onChange={() => setSelectedRole('original')}
+                    />
                     신청 역할 그대로 — <Badge value={modal.role} />
                   </label>
                   <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', fontSize: 13 }}>
-                    <input type="radio" name="role" value="admin" checked={selectedRole === 'admin'} onChange={() => setSelectedRole('admin')} />
+                    <input
+                      type="radio"
+                      name="role"
+                      value="admin"
+                      checked={selectedRole === 'admin'}
+                      onChange={() => setSelectedRole('admin')}
+                    />
                     관리자로 조정
                   </label>
                 </div>
                 <div className="modal-footer">
-                  <button className="btn btn-danger btn-sm" onClick={handleRejectConfirm}>가입 반려</button>
-                  <button className="btn btn-primary btn-sm" onClick={handleApprove}>가입 승인</button>
+                  <button className="btn btn-danger btn-sm" onClick={handleRejectProceed}>
+                    가입 반려
+                  </button>
+                  <button className="btn btn-primary btn-sm" onClick={handleApprove}>
+                    가입 승인
+                  </button>
                 </div>
               </>
             ) : (
@@ -196,7 +261,9 @@ export default function ApprovalPage() {
                 />
                 <div className="modal-footer">
                   <button className="btn btn-sm" onClick={() => setModalStep('select')}>이전</button>
-                  <button className="btn btn-danger btn-sm" onClick={handleRejectConfirm}>반려 확인</button>
+                  <button className="btn btn-danger btn-sm" onClick={handleRejectProceed}>
+                    반려 확인
+                  </button>
                 </div>
               </>
             )}

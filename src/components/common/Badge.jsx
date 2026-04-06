@@ -1,36 +1,50 @@
+// 뱃지 색상 규칙: CLAUDE.md 기준
 const VARIANT_MAP = {
-  success: { bg: '#EAF3DE', color: '#3B6D11' },
-  정상: { bg: '#EAF3DE', color: '#3B6D11' },
-  '가입 승인': { bg: '#EAF3DE', color: '#3B6D11' },
-  warning: { bg: '#FAEEDA', color: '#854F0B' },
-  심사중: { bg: '#FAEEDA', color: '#854F0B' },
-  미결제: { bg: '#FAEEDA', color: '#854F0B' },
-  danger: { bg: '#FCEBEB', color: '#A32D2D' },
-  반려: { bg: '#FCEBEB', color: '#A32D2D' },
-  에러: { bg: '#FCEBEB', color: '#A32D2D' },
-  gray: { bg: '#F1EFE8', color: '#5F5E5A' },
-  해지: { bg: '#F1EFE8', color: '#5F5E5A' },
-  삭제: { bg: '#F1EFE8', color: '#5F5E5A' },
-  정지: { bg: '#F1EFE8', color: '#5F5E5A' },
-  blue: { bg: '#E6F1FB', color: '#185FA5' },
-  클라우드: { bg: '#E6F1FB', color: '#185FA5' },
-  하이브리드: { bg: '#E6F1FB', color: '#185FA5' },
-  ADMIN: { bg: '#E6F1FB', color: '#185FA5' },
-  purple: { bg: '#EEEDFE', color: '#3C3489' },
-  마스터: { bg: '#EEEDFE', color: '#3C3489' },
-  무료: { bg: '#EEEDFE', color: '#3C3489' },
-  MASTER: { bg: '#EEEDFE', color: '#3C3489' },
-  active: { bg: '#EEEDFE', color: '#3C3489' },
-  teal: { bg: '#E1F5EE', color: '#085041' },
-  설치형: { bg: '#E1F5EE', color: '#085041' },
-  CS: { bg: '#E1F5EE', color: '#085041' },
-  coral: { bg: '#FAECE7', color: '#712B13' },
-  파트너: { bg: '#FAECE7', color: '#712B13' },
-  pink: { bg: '#FBEAF0', color: '#72243E' },
-  상품: { bg: '#FBEAF0', color: '#72243E' },
-  pending: { bg: '#FAEEDA', color: '#854F0B' },
-  rejected: { bg: '#FCEBEB', color: '#A32D2D' },
-  일반: { bg: '#F5F4F0', color: '#3A3935' },
+  // 성공 / 정상
+  success:    { bg: '#EAF3DE', color: '#3B6D11' },
+  정상:        { bg: '#EAF3DE', color: '#3B6D11' },
+  '가입 승인':  { bg: '#EAF3DE', color: '#3B6D11' },
+  활성:        { bg: '#EAF3DE', color: '#3B6D11' },
+  ON:         { bg: '#EAF3DE', color: '#3B6D11' },
+  // 경고 / 심사중 / 미결제
+  warning:    { bg: '#FAEEDA', color: '#854F0B' },
+  심사중:      { bg: '#FAEEDA', color: '#854F0B' },
+  미결제:      { bg: '#FAEEDA', color: '#854F0B' },
+  pending:    { bg: '#FAEEDA', color: '#854F0B' },
+  '승인 대기':  { bg: '#FAEEDA', color: '#854F0B' },
+  // 반려 / 에러
+  danger:     { bg: '#FCEBEB', color: '#A32D2D' },
+  반려:        { bg: '#FCEBEB', color: '#A32D2D' },
+  에러:        { bg: '#FCEBEB', color: '#A32D2D' },
+  rejected:   { bg: '#FCEBEB', color: '#A32D2D' },
+  // 해지 / 삭제 / 정지
+  gray:       { bg: '#F1EFE8', color: '#5F5E5A' },
+  해지:        { bg: '#F1EFE8', color: '#5F5E5A' },
+  삭제:        { bg: '#F1EFE8', color: '#5F5E5A' },
+  정지:        { bg: '#F1EFE8', color: '#5F5E5A' },
+  // 클라우드 / 하이브리드 / ADMIN / CS
+  blue:       { bg: '#E6F1FB', color: '#185FA5' },
+  클라우드:    { bg: '#E6F1FB', color: '#185FA5' },
+  하이브리드:  { bg: '#E6F1FB', color: '#185FA5' },
+  ADMIN:      { bg: '#E6F1FB', color: '#185FA5' },
+  // 마스터 / 무료 / MASTER / Lumia Blue
+  purple:     { bg: '#EBF5FB', color: '#1A6FA3' },
+  마스터:      { bg: '#EBF5FB', color: '#1A6FA3' },
+  무료:        { bg: '#EBF5FB', color: '#1A6FA3' },
+  MASTER:     { bg: '#EBF5FB', color: '#1A6FA3' },
+  active:     { bg: '#EBF5FB', color: '#1A6FA3' },
+  // 설치형 / CS
+  teal:       { bg: '#E1F5EE', color: '#085041' },
+  설치형:      { bg: '#E1F5EE', color: '#085041' },
+  CS:         { bg: '#E1F5EE', color: '#085041' },
+  // 일반
+  일반:        { bg: '#F5F4F0', color: '#3A3935' },
+  // coral
+  coral:      { bg: '#FAECE7', color: '#712B13' },
+  파트너:      { bg: '#FAECE7', color: '#712B13' },
+  // pink
+  pink:       { bg: '#FBEAF0', color: '#72243E' },
+  상품:        { bg: '#FBEAF0', color: '#72243E' },
 };
 
 export default function Badge({ value, variant }) {

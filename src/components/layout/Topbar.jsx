@@ -31,7 +31,7 @@ export default function Topbar() {
     <header style={{
       height: 56,
       background: 'white',
-      borderBottom: '0.5px solid var(--color-border)',
+      borderBottom: '1px solid var(--color-border)',
       display: 'flex',
       alignItems: 'center',
       padding: '0 24px',
@@ -39,27 +39,17 @@ export default function Topbar() {
       position: 'sticky',
       top: 0,
       zIndex: 100,
+      boxShadow: '0 1px 4px rgba(52,152,219,0.07)',
     }}>
-      <div style={{ flex: 1, fontWeight: 700, fontSize: 15 }}>{title}</div>
-
-      {/* 검색창 (장식용) */}
       <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 8,
-        background: 'var(--gray-100)',
-        border: '0.5px solid var(--color-border)',
-        borderRadius: 8,
-        padding: '0 12px',
-        height: 32,
-        width: 200,
-        color: 'var(--gray-400)',
-        fontSize: 12,
-      }}>
-        🔍 검색
-      </div>
+        flex: 1,
+        fontWeight: 700,
+        fontSize: 15,
+        color: 'var(--color-text)',
+        fontFamily: "'Raleway', inherit",
+      }}>{title}</div>
 
-      {/* 사용자 */}
+      {/* 사용자 영역 */}
       <div style={{ position: 'relative' }}>
         <button
           onClick={() => setOpen(v => !v)}
@@ -76,14 +66,14 @@ export default function Topbar() {
         >
           <div style={{
             width: 32, height: 32, borderRadius: '50%',
-            background: 'var(--purple-800)',
+            background: '#3498db',
             color: 'white',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontSize: 11, fontWeight: 700,
           }}>
             {user?.avatar}
           </div>
-          <span style={{ fontSize: 13, fontWeight: 600 }}>{user?.name}</span>
+          <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-text)' }}>{user?.name}</span>
           <Badge value={roleLabel} />
         </button>
 
@@ -99,14 +89,19 @@ export default function Topbar() {
               right: 0,
               marginTop: 4,
               background: 'white',
-              border: '0.5px solid var(--color-border)',
+              border: '1px solid var(--color-border)',
               borderRadius: 8,
-              boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
+              boxShadow: '0 4px 16px rgba(29,34,45,0.12)',
               width: 160,
               zIndex: 200,
               overflow: 'hidden',
             }}>
-              <div style={{ padding: '10px 14px', fontSize: 12, color: 'var(--gray-500)', borderBottom: '0.5px solid var(--color-border)' }}>
+              <div style={{
+                padding: '10px 14px',
+                fontSize: 12,
+                color: 'var(--gray-500)',
+                borderBottom: '1px solid var(--color-border)',
+              }}>
                 {user?.email}
               </div>
               <button

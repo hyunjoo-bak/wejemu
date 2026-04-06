@@ -10,12 +10,12 @@ export function AuthProvider({ children }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const stored = localStorage.getItem('erp_admin_user');
+    const stored = localStorage.getItem('wejemu_admin_user');
     if (stored) {
       try {
         setUser(JSON.parse(stored));
       } catch {
-        localStorage.removeItem('erp_admin_user');
+        localStorage.removeItem('wejemu_admin_user');
       }
     }
     setLoading(false);
@@ -34,13 +34,13 @@ export function AuthProvider({ children }) {
     }
     const { password: _pw, ...safeUser } = found;
     setUser(safeUser);
-    localStorage.setItem('erp_admin_user', JSON.stringify(safeUser));
+    localStorage.setItem('wejemu_admin_user', JSON.stringify(safeUser));
     return { success: true };
   }
 
   function logout() {
     setUser(null);
-    localStorage.removeItem('erp_admin_user');
+    localStorage.removeItem('wejemu_admin_user');
     navigate('/login');
   }
 

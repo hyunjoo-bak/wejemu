@@ -36,6 +36,22 @@ const NAV_SECTIONS = [
   },
 ];
 
+function linkStyle(isActive) {
+  return {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '8px 16px 8px 13px',
+    fontSize: 13,
+    color: isActive ? '#ffffff' : 'rgba(255,255,255,0.65)',
+    background: isActive ? 'rgba(52,152,219,0.18)' : 'transparent',
+    borderLeft: isActive ? '3px solid #3498db' : '3px solid transparent',
+    fontWeight: isActive ? 600 : 400,
+    transition: 'background 0.15s, color 0.15s',
+    textDecoration: 'none',
+    cursor: 'pointer',
+  };
+}
+
 export default function Sidebar() {
   const { user } = useAuth();
   const location = useLocation();
@@ -54,32 +70,32 @@ export default function Sidebar() {
     <aside style={{
       width: 220,
       minHeight: '100vh',
-      background: 'white',
-      borderRight: '0.5px solid var(--color-border)',
+      background: '#1d222d',
+      borderRight: 'none',
       display: 'flex',
       flexDirection: 'column',
       flexShrink: 0,
     }}>
-      {/* Brand */}
+      {/* 브랜드 */}
       <div style={{
-        padding: '20px 16px 16px',
-        borderBottom: '0.5px solid var(--color-border)',
+        padding: '14px 16px',
+        borderBottom: '1px solid rgba(255,255,255,0.08)',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{
             width: 28, height: 28, borderRadius: 8,
-            background: 'var(--purple-800)',
+            background: '#3498db',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             color: 'white', fontSize: 14, fontWeight: 700,
-          }}>경</div>
+          }}>W</div>
           <div>
-            <div style={{ fontWeight: 700, fontSize: 13, color: 'var(--purple-900)' }}>WEJEMU Admin</div>
-            <div style={{ fontSize: 10, color: 'var(--gray-400)' }}>v2.4.1</div>
+            <div style={{ fontWeight: 700, fontSize: 13, color: '#ffffff', letterSpacing: '0.02em' }}>WEJEMU Admin</div>
+            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.36)' }}>v2.4.1</div>
           </div>
         </div>
       </div>
 
-      {/* Nav */}
+      {/* 네비게이션 */}
       <nav style={{ flex: 1, padding: '8px 0', overflowY: 'auto' }}>
         {NAV_SECTIONS.map(section => {
           if (!isSectionVisible(section)) return null;
@@ -91,8 +107,8 @@ export default function Sidebar() {
                 padding: '12px 16px 4px',
                 fontSize: 10,
                 fontWeight: 700,
-                color: 'var(--gray-400)',
-                letterSpacing: '0.08em',
+                color: 'rgba(255,255,255,0.30)',
+                letterSpacing: '0.10em',
                 textTransform: 'uppercase',
               }}>
                 {section.label}
@@ -119,9 +135,9 @@ export default function Sidebar() {
                     style={linkStyle(isActive)}
                   >
                     <span style={{ flex: 1 }}>{item.label}</span>
-                    {item.badge && (
+                    {item.badge != null && (
                       <span style={{
-                        background: 'var(--red-600)',
+                        background: '#e74c3c',
                         color: 'white',
                         fontSize: 10,
                         fontWeight: 700,
@@ -136,22 +152,16 @@ export default function Sidebar() {
           );
         })}
       </nav>
+
+      <div style={{
+        padding: '12px 16px',
+        borderTop: '1px solid rgba(255,255,255,0.08)',
+        fontSize: 11,
+        color: 'rgba(255,255,255,0.25)',
+        textAlign: 'center',
+      }}>
+        Lumia Design System
+      </div>
     </aside>
   );
-}
-
-function linkStyle(isActive) {
-  return {
-    display: 'flex',
-    alignItems: 'center',
-    padding: '8px 16px',
-    fontSize: 13,
-    color: isActive ? 'var(--purple-800)' : 'var(--gray-700)',
-    background: isActive ? 'var(--purple-50)' : 'transparent',
-    borderLeft: isActive ? '3px solid var(--purple-800)' : '3px solid transparent',
-    fontWeight: isActive ? 600 : 400,
-    transition: 'background 0.15s',
-    textDecoration: 'none',
-    cursor: 'pointer',
-  };
 }

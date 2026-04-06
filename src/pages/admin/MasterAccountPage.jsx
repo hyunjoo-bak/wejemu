@@ -17,8 +17,17 @@ const MASTER_FEATURES = [
   '감사 로그 전체 열람',
 ];
 
-const ROLE_LABEL = { master: '마스터', admin: '서브 어드민', cs_manager: '고객센터(관리자)' };
-const STATUS_LABEL = { active: '활성', pending: '승인 대기', rejected: '반려' };
+const ROLE_LABEL = {
+  master: '마스터',
+  admin: '서브 어드민',
+  cs_manager: '고객센터(관리자)',
+};
+
+const STATUS_LABEL = {
+  active: '활성',
+  pending: '승인 대기',
+  rejected: '반려',
+};
 
 export default function MasterAccountPage() {
   return (
@@ -26,7 +35,7 @@ export default function MasterAccountPage() {
       <div className="page-title">마스터 계정</div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 24 }}>
-        {/* 마스터 정보 카드 */}
+        {/* 마스터 계정 정보 */}
         <div className="card">
           <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 16 }}>마스터 계정 정보</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
@@ -56,7 +65,12 @@ export default function MasterAccountPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {MASTER_FEATURES.map(f => (
               <label key={f} style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'default' }}>
-                <input type="checkbox" checked readOnly style={{ accentColor: 'var(--purple-800)', width: 16, height: 16 }} />
+                <input
+                  type="checkbox"
+                  checked
+                  readOnly
+                  style={{ accentColor: 'var(--purple-800)', width: 16, height: 16 }}
+                />
                 <span style={{ fontSize: 13 }}>{f}</span>
               </label>
             ))}
@@ -64,7 +78,7 @@ export default function MasterAccountPage() {
         </div>
       </div>
 
-      {/* 어드민 계정 목록 */}
+      {/* 현재 어드민 계정 목록 */}
       <div className="card">
         <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 16 }}>현재 어드민 계정 목록</div>
         <div className="table-wrap">
@@ -85,10 +99,17 @@ export default function MasterAccountPage() {
                   <td style={{ fontWeight: 600 }}>{u.name}</td>
                   <td>{u.email}</td>
                   <td>{u.role ? <Badge value={ROLE_LABEL[u.role] || u.role} /> : '—'}</td>
-                  <td><Badge value={STATUS_LABEL[u.status] || u.status} variant={u.status} /></td>
+                  <td>
+                    <Badge
+                      value={STATUS_LABEL[u.status] || u.status}
+                      variant={u.status}
+                    />
+                  </td>
                   <td>{u.lastLogin}</td>
                   <td>
-                    <button className="btn btn-sm" style={{ color: 'var(--purple-600)' }}>권한 수정</button>
+                    <button className="btn btn-sm" style={{ color: 'var(--purple-600)' }}>
+                      권한 수정
+                    </button>
                   </td>
                 </tr>
               ))}
