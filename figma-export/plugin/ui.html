@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { font-family: 'Inter', sans-serif; margin: 0; padding: 20px;
+         background: #fff; color: #1a1a1a; }
+  h3   { margin: 0 0 8px; font-size: 14px; color: #3C3489; }
+  p    { font-size: 12px; color: #666; margin: 0 0 16px; line-height: 1.5; }
+  button { width: 100%; padding: 10px; background: #3C3489; color: #fff;
+           border: none; border-radius: 6px; font-size: 13px; cursor: pointer; }
+  button:hover { background: #26215C; }
+  #status { margin-top: 12px; font-size: 12px; color: #3C3489; min-height: 20px; }
+</style>
+</head>
+<body>
+  <h3>WEJEMU Admin Importer</h3>
+  <p>8개 어드민 페이지를 편집 가능한<br>Figma 프레임으로 생성합니다.</p>
+  <button id="btn">모든 페이지 생성 (8개 프레임)</button>
+  <div id="status"></div>
+  <script>
+    const btn = document.getElementById('btn');
+    const status = document.getElementById('status');
+    btn.onclick = () => {
+      btn.disabled = true;
+      btn.textContent = '생성 중...';
+      status.textContent = '프레임을 생성하고 있습니다. 잠시 기다려주세요.';
+      parent.postMessage({ pluginMessage: { type: 'create' } }, '*');
+    };
+    window.onmessage = e => {
+      const msg = e.data.pluginMessage;
+      if (!msg) return;
+      if (msg.type === 'progress') {
+        status.textContent = msg.text;
+      } else if (msg.type === 'done') {
+        btn.textContent = '완료!';
+        status.textContent = '✅ ' + msg.text;
+      } else if (msg.type === 'error') {
+        btn.disabled = false;
+        btn.textContent = '모든 페이지 생성 (8개 프레임)';
+        status.textContent = '❌ 오류: ' + msg.text;
+      }
+    };
+  </script>
+</body>
+</html>

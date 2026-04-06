@@ -1,0 +1,10 @@
+{
+  "name": "WEJEMU Admin Importer",
+  "id": "wejemu-admin-importer-001",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": [
+    "figma"
+  ]
+}
